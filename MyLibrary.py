@@ -1,21 +1,14 @@
+#!/usr/bin/env python
+# coding: utf-8
+
 # MY LIBRARY
 import numpy as np
-
-def is_prime(n):
-    isprime = True
-    limit = int(n**0.5)+1
-    i=2
-    while isprime and i<limit:
-        if n%i==0:
-            isprime= False
-        i+=1
-    return isprime
 
 def crible(n) :
     L, P = [], []
     for i in range(2,n+1) :
         L.append(i)
-    for i in range(2,int(n**0.5)+1) :
+    for i in range(2,int(np.sqrt(n))+1) :
         for j in range(i,n-2) :
             if (L[j] % i) == 0 :
                 L[j] = 0
@@ -81,7 +74,63 @@ def sum_list(L) :
     return S
 
 def fact(n):
-    if n==1:
+    if n==1 or n==0:
         return 1
     else :
         return n*fact(n-1)
+    
+def dichotomy(l, e):
+    size = len(l)
+    (a, b) = (0, size - 1)
+    while b - a > 1:
+        m = (a + b) // 2
+        if e == l[m]:
+            return m
+        elif e < l[m]:
+            b = m
+        else:
+            a = m
+    if e == l[a]:
+        return a
+    elif e == l[b]:
+        return b
+    elif l[a] < e < l[b]:
+        return a, b
+    elif e < l[a]:
+        return (0, -1)
+    else:
+        return (-1, 0)
+    return a, b
+
+def is_in_dichotomy(l,e):
+    size = len(l)
+    (a, b) = (0, size - 1)
+    while b - a > 1:
+        m = (a + b) // 2
+        if e == l[m]:
+            return True
+        elif e < l[m]:
+            b = m
+        else:
+            a = m
+    if e == l[a]:
+        return True
+    elif e == l[b]:
+        return True
+    else:
+        return False
+    
+def tri_bulle(liste) :
+    n = len(liste)
+    pres_inv = True
+    cpt = 0
+    while pres_inv :
+        # Inv : liste[n-cpt] <= ... <= liste[n-1]
+        #   et j < n-cpt => liste[j] <= liste[n-cpt]
+        pres_inv = False
+        for j in range(n-cpt-1) :
+            if liste[j] < liste[j+1] :
+                liste[j+1], liste[j] = liste[j], liste[j+1]
+                pres_inv = True
+        cpt = cpt + 1
+    return liste
